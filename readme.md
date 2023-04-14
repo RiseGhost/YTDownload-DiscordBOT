@@ -5,6 +5,8 @@
 - framework -> Node
 - version -> 1.0.0
 
+Link to add bot -> https://discord.com/api/oauth2/authorize?client_id=1096036731255541770&permissions=2147498048&scope=bot
+
 ## Implementation 💻:
 
 Para fazer o download da música do YouTube é utilizado o module __ytdl-core__.
