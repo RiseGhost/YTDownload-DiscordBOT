@@ -12,4 +12,8 @@ const downloadCommand = new SlashCommandBuilder()
         .setDescription('URL do vídeo do YouTube')
         .setRequired(true));
 
-module.exports = {ping, downloadCommand}
+const about = new SlashCommandBuilder()
+    .setName('about')
+    .setDescription('Mostra a informação do projeto do bot')
+
+module.exports = {ping, downloadCommand, about}
