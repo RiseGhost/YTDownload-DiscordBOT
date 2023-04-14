@@ -1,3 +1,4 @@
+//Implementação dos SlashCommands (/)
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const ping = new  SlashCommandBuilder()
