@@ -1,5 +1,10 @@
 {
     "bot-data":{
-        "TOKEN": ""
+        "TOKEN": "MTA5Njk3ODY1OTM3MTQwMTI3OQ.GS5ION.3hy5dFKWOZqbYhLNW_R4wmj1TDIi5y4I2X-rsM",
+        "CALL-MSG" : "@everyone \nHello everyone 👋🏻. Anyone want to come play 🎮 ",
+        "CALL-MSGPT": "@everyone \nBoas maltinha 👋🏻. Alguém quer vir jogar 🎮 ",
+        "CALL-MSGES": "@everyone \nBuena malta 👋🏻. Alguien quiere venir a jugar 🎮",
+        "CALL-MSGFR": "@everyone \nBon malt 👋🏻. Quelqu'un veut venir jouer au 🎮",
+        "CALL-MSGIT": "@everyone \nBuon malto 👋🏻. Chiunque voglia 🎮 venire a fare il "
     }
 }
