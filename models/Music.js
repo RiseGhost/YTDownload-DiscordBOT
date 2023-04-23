@@ -1,4 +1,6 @@
 const yt = require('ytdl-core');
+const discordyt = require('ytdl-core-discord')
+const { createAudioResource } = require('@discordjs/voice');
 
 const audioOptions = {
     filter: 'audioonly',
@@ -21,7 +23,16 @@ async function getmusic(url){
     }
 }
 
+async function getYouTubeResource(url){
+    try {
+        return createAudioResource(await discordyt(url))
+    } catch (error) {
+        return -1
+    }
+}
+
 module.exports = {
     getmusic,
-    audioOptions
+    audioOptions,
+    getYouTubeResource
 }

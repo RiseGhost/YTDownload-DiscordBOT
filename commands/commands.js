@@ -29,4 +29,12 @@ const call = new SlashCommandBuilder()
         .setDescription('Choose menssage language')
         .setRequired(false))
 
-module.exports = {ping, downloadCommand, about, call}
+const play = new SlashCommandBuilder()
+    .setName('play')
+    .setDescription('play music')
+    .addStringOption(option =>
+        option.setName('url')
+        .setDescription('YouTube URL')
+        .setRequired(true))
+
+module.exports = {ping, downloadCommand, about, call, play}
