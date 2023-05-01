@@ -3,7 +3,7 @@
 - author -> RiseGhost 👻
 - programming language 💻 -> JavaScript
 - framework -> Node
-- version -> 1.0.0
+- version -> 1.0.3
 
 Link to add bot -> https://discord.com/api/oauth2/authorize?client_id=1096036731255541770&permissions=40271764011072&scope=bot
 
