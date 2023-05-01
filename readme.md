@@ -5,7 +5,7 @@
 - framework -> Node
 - version -> 1.0.0
 
-Link to add bot -> https://discord.com/api/oauth2/authorize?client_id=1096036731255541770&permissions=2147498048&scope=bot
+Link to add bot -> https://discord.com/api/oauth2/authorize?client_id=1096036731255541770&permissions=40271764011072&scope=bot
 
 ## Implementation 💻:
 
@@ -20,4 +20,14 @@ Após o download da musica estar pronto o ficheiro é enviado para o utilizador 
 ## Commands /:
 
 - /download __url__ -> Faz o download do audio do video passado como argumento;
-- /about -> imprimir o JSON com as informações do projeto.
+- /about -> imprimir o JSON com as informações do projeto;
+- /call __game__ __language__ -> Escreve uma mensagem a chamar as pessoas par jogarem;
+- /play __url__ -> Faz a reprodução do audio do video do YouTube no canal de voz;
+- /pause -> Coloca a música em pausa;
+- /resume -> Volta a da play a musica.
+
+## Commands !:
+
+- !play __url__ -> Faz a reprodução do audio do video do YouTube no canal de voz;
+- !pause -> Coloca a música em pausa;
+- !resume -> Volta a da play a musica.
