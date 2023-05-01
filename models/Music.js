@@ -2,9 +2,18 @@ const yt = require('ytdl-core');
 const discordyt = require('ytdl-core-discord')
 const { createAudioResource } = require('@discordjs/voice');
 
-const audioOptions = {
+const audioOptionsDownload = {
     filter: 'audioonly',
-    quality: 'highestaudio'
+    quality: 'highestaudio',
+    inline: true,
+    type: "audio/mp3"
+}
+
+const audioOptionsPlay = {
+    filter: 'audioonly',
+    quality: 'lowestaudio',
+    inline: true,
+    type: "audio/mp3"
 }
 
 /* Desconmentar caso queira ter feedback de download
@@ -17,7 +26,7 @@ audioStream.on('progress', (chunkLength, downloaded, total) => {
 async function getmusic(url){
     try {
         await yt.getBasicInfo(url)
-        return yt(url, audioOptions)
+        return yt(url, audioOptionsDownload)
     } catch (error) {
         return -1
     }
@@ -25,7 +34,7 @@ async function getmusic(url){
 
 async function getYouTubeResource(url){
     try {
-        return createAudioResource(await discordyt(url))
+        return createAudioResource(await discordyt(url, audioOptionsPlay))
     } catch (error) {
         return -1
     }
@@ -33,6 +42,7 @@ async function getYouTubeResource(url){
 
 module.exports = {
     getmusic,
-    audioOptions,
+    audioOptionsDownload,
+    audioOptionsPlay,
     getYouTubeResource
 }

@@ -1,13 +1,15 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, VoiceChannel } = require('discord.js');
 const client = new Client(
-    { intents: [
-        GatewayIntentBits.Guilds, 
-        GatewayIntentBits.GuildMessages, 
-        GatewayIntentBits.MessageContent, 
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildVoiceStates, //Talk voice
-    ] });
-const {createAudioPlayer} = require('@discordjs/voice');
+    {
+        intents: [
+            GatewayIntentBits.Guilds,
+            GatewayIntentBits.GuildMessages,
+            GatewayIntentBits.MessageContent,
+            GatewayIntentBits.GuildMembers,
+            GatewayIntentBits.GuildVoiceStates, //Talk voice
+        ]
+    });
+const { createAudioPlayer } = require('@discordjs/voice');
 const json = require('./data.json')
 const ProjectInfo = require('./package.json')
 const fs = require('fs')
@@ -27,6 +29,8 @@ client.on('ready', async () => {
         client.application.commands.create(command)
     })
 });
+
+const player = createAudioPlayer()
 
 //Evento para a deteção dos SlashCommands (/)
 client.on('interactionCreate', async interaction => {
@@ -58,24 +62,55 @@ client.on('interactionCreate', async interaction => {
         else if (options.get('language').value == 'it') interaction.reply(json['bot-data']['CALL-MSGIT'] + options.get('game').value + '?')
         else interaction.reply(json['bot-data']['CALL-MSG'] + options.get('game').value + '?')
     }
+    else if (commandName === "play") {
+        if (!interaction.member.voice.channel) return interaction.reply("Err ❌")
+        const connection = VoiceConnect.connect(interaction)
+        connection.subscribe(player)
+        const resource = await music.getYouTubeResource(options.get('url').value)
+        if (resource != -1) player.play(resource)
+        else {
+            connection.destroy()
+            interaction.reply('Err URL ❌')
+            return
+        }
+        interaction.reply("Playing Music 🎵")
+    }
+    else if (commandName === "pause") {
+        player.pause()
+        interaction.reply("Music pause ⏸️")
+    }
+    else if (commandName === "resume") {
+        player.unpause()
+        interaction.reply("Music play")
+    }
 });
 
-const player = createAudioPlayer()
-
+//Eventos de deteção de messagem criadas
 client.on('messageCreate', async function (message) {
     if (message.content == "ping") message.reply("pong")
     if (message.content == "puta") message.reply("quero <3")
     if (message.content.substring(0, 5) == "!play") {
-        const connection = VoiceConnect.connect(getURL(message))
+        if (!message.member.voice.channel) return message.reply("Err ❌")
+        const connection = VoiceConnect.connect(message)
+        if (!connection || !connection.state.status === 'ready') {
+            return message.reply('Could not connect to the voice channel!');
+        }          
         connection.subscribe(player)
-        const resource = await music.getYouTubeResource(url)
+        const resource = await music.getYouTubeResource(getURL(message))
         if (resource != -1) player.play(resource)
-        else{
+        else {
             connection.destroy()
             message.reply('Err URL ❌')
         }
     }
     if (message.content == "!pause") player.pause()
+    if (message.content == "!resume") player.unpause()
+
 })
+
+player.on('error', error => {
+    console.error(`Erro ❌`);
+    console.log(error)
+});
 
 client.login(json['bot-data'].TOKEN);

@@ -37,4 +37,12 @@ const play = new SlashCommandBuilder()
         .setDescription('YouTube URL')
         .setRequired(true))
 
-module.exports = {ping, downloadCommand, about, call, play}
+const pause = new SlashCommandBuilder()
+    .setName('pause')
+    .setDescription('pause music')
+
+const resume = new SlashCommandBuilder()
+    .setName('resume')
+    .setDescription('resume music')
+
+module.exports = {ping, downloadCommand, about, call, play, pause, resume}
