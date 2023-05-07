@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, VoiceChannel } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 const client = new Client(
     {
         intents: [
@@ -14,8 +14,12 @@ const json = require('./data.json')
 const ProjectInfo = require('./package.json')
 const fs = require('fs')
 const music = require('./models/Music')
-const commands = require('./commands/commands.js');
+const commands = require('./commands/commands.js')
 const VoiceConnect = require('./models/VoiceConnect')
+const List = require('./models/List')
+const SplitList = [',', ';', '/', ' ']
+
+
 
 //npm i ffmpeg-static | @discordjs/opus
 
@@ -105,6 +109,38 @@ client.on('messageCreate', async function (message) {
     }
     if (message.content == "!pause") player.pause()
     if (message.content == "!resume") player.unpause()
+    if (message.content.substring(0, 4) == "list"){
+        const input = List.format(message.content.replace("list", ''))
+        var NumberList = []
+        var ListType
+        var SortList
+        List.List(input, SplitList, NumberList)
+        if (input == '' || NumberList.toString() == '') return message.reply("Err ❌\nInvalid values")
+
+        if (List.isNumericList(NumberList)) ListType = "numeric"
+        else ListType = "string"
+
+        const Embed = new EmbedBuilder()
+	    .setColor(0xfafa02)
+	    .setTitle('**List: ⛓️**')
+	    .setAuthor({ name: json['bot-data'].Name, iconURL: 'attachment://hera.png', url: 'https://github.com/RiseGhost/YTDownload-DiscordBOT' })
+	    .setDescription('List info:')
+        .addFields(
+            { name: 'Original List ', value: NumberList.toString() },
+            { name: 'Sort List', value: (ListType == "numeric") ? NumberList.sort((a,b) => a - b).toString() : NumberList.sort().toString() },
+            { name: '\u200B', value: '\u200B' },
+            { name: 'Type List ', value: ListType, inline: true },
+            { name: 'List size', value: NumberList.length.toString(), inline: true },
+            { name: 'Max value', value: NumberList[NumberList.length - 1].toString(), inline: true },
+            { name: 'Average', value: List.average(NumberList) }
+        )
+	    .setThumbnail('attachment://hera.png')
+	    .setTimestamp()
+	    .setFooter({ text: 'Some footer text here', iconURL: 'attachment://hera.png' });
+
+        message.channel.send({ embeds: [Embed], files: ['icons/hera.png'] })
+        //message.reply(message.content.replace("list", ''))
+    }
 
 })
 
